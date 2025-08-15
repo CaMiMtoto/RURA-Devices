@@ -64,10 +64,7 @@
 
                     <!--begin::Toolbar-->
                     <div class="card-toolbar pt-5">
-                        <div class="d-flex justify-content-end gap-3">
-                            <input type="date" class="form-control form-control-solid rounded-1" value="{{ now()->startOfWeek()->format('Y-m-d') }}"/>
-                            <input type="date" class="form-control form-control-solid rounded-1" value="{{ now()->format('Y-m-d') }}"/>
-                        </div>
+
                     </div>
                     <!--end::Toolbar-->
                 </div>
@@ -86,47 +83,18 @@
                                     class="bg-warning-subtle  border border-warning-subtle  bg-opacity-70 rounded-2 px-6 py-5">
                                     <!--begin::Symbol-->
                                     <span class="text-warning">
-                                    <x-lucide-kanban class="fs-3 text-warning tw-h-12 tw-w-12"/>
+                                    <x-lucide-clock-12 class="fs-3 text-warning tw-h-12 tw-w-12"/>
                                 </span>
                                     <!--begin::Stats-->
                                     <div class="m-0">
                                         <!--begin::Number-->
                                         <span class="text-warning-emphasis d-block  lh-1 ls-n1 mb-1 display-5 my-4">
-                                        {{ random_int(0,100) }}
+                                        {{ number_format($totalPendingConfirmations) }}
                                     </span>
                                         <!--end::Number-->
 
                                         <!--begin::Desc-->
-                                        <span class="text-warning-emphasis fw-semibold fs-6">Pending Review</span>
-                                        <!--end::Desc-->
-                                    </div>
-                                    <!--end::Stats-->
-                                </div>
-                                <!--end::Items-->
-                            </div>
-                            <!--end::Col-->
-                            <!--begin::Col-->
-                            <div class="col-12 col-md-6 col-xl-3">
-                                <!--begin::Items-->
-                                <div
-                                    class="bg-primary-subtle  border border-primary-subtle  bg-opacity-70 rounded-2 px-6 py-5">
-                                    <!--begin::Symbol-->
-                                    <span class="text-success">
-                                    <x-lucide-square-check-big class="fs-3 text-primary tw-h-12 tw-w-12"/>
-                                </span>
-
-                                    <!--end::Symbol-->
-
-                                    <!--begin::Stats-->
-                                    <div class="m-0">
-                                        <!--begin::Number-->
-                                        <span class="text-primary-emphasis d-block  lh-1 ls-n1 mb-1 display-5 my-4">
-                                        {{ random_int(0,100) }}
-                                    </span>
-                                        <!--end::Number-->
-
-                                        <!--begin::Desc-->
-                                        <span class="text-primary-emphasis fw-semibold fs-6">Submitted Reports</span>
+                                        <span class="text-warning-emphasis fw-semibold fs-6">Pending Assets</span>
                                         <!--end::Desc-->
                                     </div>
                                     <!--end::Stats-->
@@ -141,21 +109,18 @@
                                     class="bg-success-subtle  border border-success-subtle  bg-opacity-70 rounded-2 px-6 py-5">
                                     <!--begin::Symbol-->
                                     <span class="text-success">
-                                    <x-lucide-check-check class="fs-3 text-success tw-h-12 tw-w-12"/>
+                                    <x-lucide-check-circle class="fs-3 text-success tw-h-12 tw-w-12"/>
                                 </span>
-
-                                    <!--end::Symbol-->
-
                                     <!--begin::Stats-->
                                     <div class="m-0">
                                         <!--begin::Number-->
                                         <span class="text-success-emphasis d-block  lh-1 ls-n1 mb-1 display-5 my-4">
-                                       {{ random_int(0,100) }}
+                                        {{ number_format($totalConfirmedAssets) }}
                                     </span>
                                         <!--end::Number-->
 
                                         <!--begin::Desc-->
-                                        <span class="text-success-emphasis fw-semibold fs-6">Submitted to DG</span>
+                                        <span class="text-success-emphasis fw-semibold fs-6">Confirmed Assets</span>
                                         <!--end::Desc-->
                                     </div>
                                     <!--end::Stats-->
@@ -167,26 +132,21 @@
                             <div class="col-12 col-md-6 col-xl-3">
                                 <!--begin::Items-->
                                 <div
-                                    class="bg-danger-subtle  border border-danger-subtle  bg-opacity-70 rounded-2 px-6 py-5">
+                                    class="bg-success-subtle  border border-success-subtle  bg-opacity-70 rounded-2 px-6 py-5">
                                     <!--begin::Symbol-->
-                                    <span class="text-danger">
-                                    <x-lucide-users class="fs-3 text-danger tw-h-12 tw-w-12"/>
+                                    <span class="text-success">
+                                    <x-lucide-circle-arrow-out-down-left class="fs-3 text-success tw-h-12 tw-w-12"/>
                                 </span>
-
-                                    <!--end::Symbol-->
-
                                     <!--begin::Stats-->
                                     <div class="m-0">
                                         <!--begin::Number-->
-                                        <span class="text-danger-emphasis d-block  lh-1 ls-n1 mb-1 display-5 my-4">
-                                        {{ \App\Models\User::query()->count() }}
+                                        <span class="text-success-emphasis d-block  lh-1 ls-n1 mb-1 display-5 my-4">
+                                        {{ number_format($totalReceivedAssets) }}
                                     </span>
                                         <!--end::Number-->
 
                                         <!--begin::Desc-->
-                                        <span class="text-danger-emphasis fw-semibold fs-6">
-                                            System Users
-                                        </span>
+                                        <span class="text-success-emphasis fw-semibold fs-6">Received Assets</span>
                                         <!--end::Desc-->
                                     </div>
                                     <!--end::Stats-->
@@ -194,50 +154,40 @@
                                 <!--end::Items-->
                             </div>
                             <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-12 col-md-6 col-xl-3">
+                                <!--begin::Items-->
+                                <div
+                                    class="bg-warning-subtle  border border-warning-subtle  bg-opacity-70 rounded-2 px-6 py-5">
+                                    <!--begin::Symbol-->
+                                    <span class="text-warning">
+                                    <x-lucide-circle-arrow-out-up-right class="fs-3 text-warning tw-h-12 tw-w-12"/>
+                                </span>
+                                    <!--begin::Stats-->
+                                    <div class="m-0">
+                                        <!--begin::Number-->
+                                        <span class="text-warning-emphasis d-block  lh-1 ls-n1 mb-1 display-5 my-4">
+                                        {{ number_format($totalNotReceivedAssets) }}
+                                    </span>
+                                        <!--end::Number-->
+
+                                        <!--begin::Desc-->
+                                        <span class="text-warning-emphasis fw-semibold fs-6">Not Received Assets</span>
+                                        <!--end::Desc-->
+                                    </div>
+                                    <!--end::Stats-->
+                                </div>
+                                <!--end::Items-->
+                            </div>
+                            <!--end::Col-->
+
+
                         </div>
                         <!--end::Row-->
                     </div>
                     <!--end::Stats-->
                 </div>
                 <!--end::Body-->
-            </div>
-
-
-            <!-- Table -->
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">
-                        Recent Activity
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Activity</th>
-                            <th>Date</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Jean Paul</td>
-                            <td>Logged in</td>
-                            <td>June 25, 2025</td>
-                        </tr>
-                        <tr>
-                            <td>Eric</td>
-                            <td>Uploaded report</td>
-                            <td>June 24, 2025</td>
-                        </tr>
-                        <tr>
-                            <td>Alice</td>
-                            <td>Changed settings</td>
-                            <td>June 23, 2025</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
 
 

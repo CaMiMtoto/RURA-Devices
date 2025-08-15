@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\Permission;
+use App\Models\Asset;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,33 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $baseQuery = Asset::query()->where('email', auth()->user()->email);
+
+        $totalPendingConfirmations = (clone $baseQuery)
+            ->whereDoesntHave('confirmedAssets')
+            ->count();
+
+        $totalConfirmedAssets = (clone $baseQuery)
+            ->whereHas('confirmedAssets')
+            ->count();
+
+        $totalReceivedAssets = (clone $baseQuery)
+            ->whereHas('confirmedAssets', function ($q) {
+                $q->where('status', 'received');
+            })
+            ->count();
+
+        $totalNotReceivedAssets = (clone $baseQuery)
+            ->whereHas('confirmedAssets', function ($q) {
+                $q->where('status', 'not_received');
+            })
+            ->count();
+
+        return view('admin.dashboard', compact(
+            'totalPendingConfirmations',
+            'totalConfirmedAssets',
+            'totalReceivedAssets',
+            'totalNotReceivedAssets'
+        ));
     }
 }

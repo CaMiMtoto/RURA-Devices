@@ -54,7 +54,8 @@
                 Please view the assets assigned to you. You are required to confirm whether you have received the asset
                 or not.
                 If you have received the assets, please click on the "Received" button
-                and if you have not received the assets, please click on the "Not Received" button.
+                and if you have not received the assets, please click on the "Not Received" button after selecting the
+                assets you want to confirm.
             </div>
             <div class="table-responsive">
                 <div>
@@ -213,7 +214,7 @@
                                 data: {
                                     _token: '{{ csrf_token() }}',
                                     ids: selectedIds,
-                                    status:'confirmed',
+                                    status:'received',
                                 },
                                 success: function () {
                                     myTable.ajax.reload();

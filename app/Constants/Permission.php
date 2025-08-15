@@ -8,6 +8,7 @@ class Permission
     const MANAGE_ROLES = 'MANAGE_ROLES';
     const MANAGE_PERMISSIONS = 'MANAGE_PERMISSIONS';
     const MANAGE_DEPARTMENTS = 'MANAGE_DEPARTMENTS';
+    const VIEW_REPORTS = 'VIEW_REPORTS';
 
     public static function all(): array
     {

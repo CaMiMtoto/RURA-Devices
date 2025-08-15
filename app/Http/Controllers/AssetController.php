@@ -91,7 +91,7 @@ class AssetController extends Controller
         $data = $request->validate([
             'ids' => ['required', 'array'],
             'ids.*' => ['required', 'integer'],
-            'status' => ['required', 'string', 'in:confirmed,not_received'],
+            'status' => ['required', 'string', 'in:received,not_received'],
         ]);
 
         $assets = Asset::query()
