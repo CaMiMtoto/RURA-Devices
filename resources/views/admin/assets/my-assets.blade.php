@@ -83,7 +83,6 @@
                         <th>Name</th>
                         <th>Tag Number</th>
                         <th>Status</th>
-                        <th>Options</th>
                     </tr>
                     </thead>
                 </table>
@@ -177,14 +176,14 @@
                     {data: 'name', name: 'name'},
                     {data: 'tag_number', name: 'tag_number'},
                     {data: 'status', name: 'status'},
-                    {
-                        data: 'actions',
-                        name: 'actions',
-                        orderable: false,
-                        searchable: false,
-                        class: 'text-center',
-                        width: '15%'
-                    },
+                    // {
+                    //     data: 'actions',
+                    //     name: 'actions',
+                    //     orderable: false,
+                    //     searchable: false,
+                    //     class: 'text-center',
+                    //     width: '15%'
+                    // },
                 ],
                 order: [[1, 'desc']]
             });

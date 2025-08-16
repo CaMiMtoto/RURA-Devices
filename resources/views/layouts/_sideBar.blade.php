@@ -33,13 +33,13 @@
             </div>
 
 
+            @canany([\App\Constants\Permission::MANAGE_DEPARTMENTS,\App\Constants\Permission::MANAGE_JOB_TITLES])
 
-
-            <!--end:Menu item-->
-            <div data-kt-menu-trigger="click"
-                 class="menu-item menu-accordion  {{ Str::of(request()->url())->contains('/admin/settings')?'show':'' }}">
-                <!--begin:Menu link-->
-                <span class="menu-link">
+                <!--end:Menu item-->
+                <div data-kt-menu-trigger="click"
+                     class="menu-item menu-accordion  {{ Str::of(request()->url())->contains('/admin/settings')?'show':'' }}">
+                    <!--begin:Menu link-->
+                    <span class="menu-link">
                         <span class="menu-icon">
                               <x-lucide-settings-2 class="tw-w-6 tw-h-6"/>
                         </span>
@@ -48,24 +48,29 @@
                         </span>
                         <span class="menu-arrow"></span>
                     </span>
-                <!--end:Menu link-->
+                    <!--end:Menu link-->
 
-                <!--begin:Menu sub-->
-                <div class="menu-sub menu-sub-accordion">
-                    <a class="menu-link  {{ request()->url()==route('admin.settings.departments.index')?'active':'' }}"
-                       href="{{ route('admin.settings.departments.index') }}">
-                        <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                        <span class="menu-title">Departments</span>
-                    </a>
-                    <a class="menu-link  {{ request()->url()==route('admin.settings.job-titles.index')?'active':'' }}"
-                       href="{{ route('admin.settings.job-titles.index') }}">
-                        <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
-                        <span class="menu-title">Job Titles</span>
-                    </a>
+                    <!--begin:Menu sub-->
+                    <div class="menu-sub menu-sub-accordion">
+                        @can(\App\Constants\Permission::MANAGE_DEPARTMENTS)
+                            <a class="menu-link  {{ request()->url()==route('admin.settings.departments.index')?'active':'' }}"
+                               href="{{ route('admin.settings.departments.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Departments</span>
+                            </a>
+                        @endcan
+                        @can(\App\Constants\Permission::MANAGE_JOB_TITLES)
+                            <a class="menu-link  {{ request()->url()==route('admin.settings.job-titles.index')?'active':'' }}"
+                               href="{{ route('admin.settings.job-titles.index') }}">
+                                <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                                <span class="menu-title">Job Titles</span>
+                            </a>
+                        @endcan
+                    </div>
+                    <!--end:Menu item-->
+
                 </div>
-                <!--end:Menu item-->
-
-            </div>
+            @endcanany
 
 
             @canany([\App\Constants\Permission::MANAGE_ROLES,\App\Constants\Permission::MANAGE_PERMISSIONS,\App\Constants\Permission::MANAGE_USERS])

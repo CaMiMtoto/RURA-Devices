@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 
 //#[ScopedBy(ActiveScope::class)]
 /**
- * 
- *
  * @property int $id
  * @property string $name
  * @property string|null $abbreviation

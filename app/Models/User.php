@@ -12,8 +12,6 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- *
- *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -25,8 +23,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $username
  * @property string|null $phone_number
  * @property int|null $department_id
- * @property bool $is_super_admin
- * @property bool $is_active
+ * @property int $is_super_admin
+ * @property int $is_active
  * @property int|null $job_title_id
  * @property-read \App\Models\Department|null $department
  * @property-read string $profile_photo_url
