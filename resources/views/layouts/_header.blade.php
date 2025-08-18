@@ -96,6 +96,18 @@
                         <!--begin::Menu separator-->
                         <div class="separator my-2"></div>
                         <!--end::Menu separator-->
+
+                        <div class="menu-item px-5">
+                            <a href="{{ route('admin.system.profile.index') }}" class="menu-link px-5">
+                                My Profile
+                            </a>
+                        </div>
+                        <div class="menu-item px-5">
+                            <a href="{{ route('admin.system.profile.change-password') }}" class="menu-link px-5">
+                                Change Password
+                            </a>
+                        </div>
+
                         <!--begin::Menu item-->
                         <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
                              data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">

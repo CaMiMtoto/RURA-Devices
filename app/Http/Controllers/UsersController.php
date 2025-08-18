@@ -35,7 +35,7 @@ class UsersController extends Controller
     public function index(RoleService $roleService)
     {
         if (\request()->ajax()) {
-            $source = User::query()->with(['jobTitle','department'])->select('*');
+            $source = User::query()->with(['jobTitle', 'department'])->select('*');
             return datatables()->of($source)
                 ->addColumn('action', fn(User $user) => view('admin.users.action', compact('user')))
                 ->rawColumns(['action'])
@@ -62,11 +62,11 @@ class UsersController extends Controller
             'email' => ['required', 'string', 'email',
                 Rule::unique('users')->ignore($request->id),
             ],
-            'roles' => ['required', 'array'],
-            'roles.*' => ['required', 'integer', 'exists:roles,id'],
+            'roles' => ['nullable', 'array'],
+            'roles.*' => ['nullable', 'integer', 'exists:roles,id'],
             'phone' => ['required', 'string', 'max:255'],
             'department_id' => ['required', 'integer', 'exists:departments,id'],
-            'job_title_id' => ['required', 'integer', 'exists:job_titles,id'],
+//            'job_title_id' => ['required', 'integer', 'exists:job_titles,id'],
         ]);
 
         $id = $request->input('id');

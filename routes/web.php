@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Http\Controllers\UsersController;
 use App\Http\Middleware\EnsureUserIsActive;
 use App\Http\Middleware\PasswordChanged;
@@ -15,8 +16,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['auth', PasswordChanged::class, EnsureUserIsActive::class], 'prefix' => '/admin', 'as' => 'admin.'], function () {
 
-    Route::get('/my-assets',[\App\Http\Controllers\AssetController::class,'myAssets'])->name('my-assets');
-    Route::post('/confirm-assets',[\App\Http\Controllers\AssetController::class,'confirmAssets'])->name('my-assets.confirmation');
+    Route::get('/my-assets',[AssetController::class,'myAssets'])->name('my-assets');
+    Route::post('/confirm-assets',[AssetController::class,'confirmAssets'])->name('my-assets.confirmation');
 
     Route::group(['prefix' => "settings", "as" => "settings."], function () {
         Route::get('/departments', [App\Http\Controllers\DepartmentController::class, 'index'])->name('departments.index');
@@ -46,6 +47,11 @@ Route::group(['middleware' => ['auth', PasswordChanged::class, EnsureUserIsActiv
         Route::get('/users/{user}', [App\Http\Controllers\UsersController::class, 'show'])->name('users.show');
         Route::post('/users/import', [UsersController::class, 'import'])->name('users.import');
         Route::get('/permissions', [App\Http\Controllers\PermissionsController::class, 'index'])->name('permissions.index');
+
+
+        Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/profile/change-password', [App\Http\Controllers\ProfileController::class, 'changePasswordView'])->name('profile.change-password');
+        Route::post('/profile/change-password', [App\Http\Controllers\ProfileController::class, 'changePassword'])->name('profile.change-password.post');
 
     });
 

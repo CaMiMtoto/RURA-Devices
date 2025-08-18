@@ -18,6 +18,7 @@ class Permission
             self::MANAGE_ROLES,
             self::MANAGE_PERMISSIONS,
             self::MANAGE_DEPARTMENTS,
+            self::VIEW_REPORTS
         ];
     }
 }

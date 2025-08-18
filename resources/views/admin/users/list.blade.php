@@ -74,7 +74,7 @@
 
 
     <div class="modal fade" tabindex="-1" id="myModal">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">
@@ -93,51 +93,35 @@
                     @csrf
                     <input type="hidden" id="id" name="id" value="0"/>
                     <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder=""/>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="text" class="form-control" id="email" name="email" placeholder=""/>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder=""/>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="job_title_id" class="form-label">Job Title</label>
-                                    <select name="job_title_id" id="job_title_id" class="form-select">
-                                        <option value=""></option>
-                                        @foreach($jobTitles as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="department_id" class="form-label">Department</label>
-                                    <select name="department_id" id="department_id" class="form-select">
-                                        <option value=""></option>
-                                        @foreach($departments as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="email" name="email" placeholder=""/>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Phone</label>
-                                    <input type="text" class="form-control" id="phone" name="phone" placeholder=""/>
-                                </div>
-                            </div>
+                  {{--      <div class="mb-3">
+                            <label for="job_title_id" class="form-label">Job Title</label>
+                            <select name="job_title_id" id="job_title_id" class="form-select">
+                                <option value=""></option>
+                                @foreach($jobTitles as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>--}}
+                        <div class="mb-3">
+                            <label for="department_id" class="form-label">Department</label>
+                            <select name="department_id" id="department_id" class="form-select">
+                                <option value=""></option>
+                                @foreach($departments as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="phone" name="phone" placeholder=""/>
                         </div>
 
 
