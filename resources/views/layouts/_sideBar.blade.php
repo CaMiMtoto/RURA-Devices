@@ -22,16 +22,63 @@
                 </a>
             </div>
 
-            <div class="menu-item ">
-                <a href="{{ route('admin.my-assets') }}"
-                   class="menu-link {{ request()->fullUrl() ==route('admin.my-assets')?'active':'' }}">
-                    <div class="menu-icon">
-                        <x-lucide-laptop-minimal class="tw-w-6 tw-h-6"/>
-                    </div>
-                    <span class="menu-title">My Assets</span>
-                </a>
+
+            <!--end:Menu item-->
+            <div data-kt-menu-trigger="click"
+                 class="menu-item menu-accordion  {{ Str::of(request()->url())->contains('/admin/my-assets')?'show':'' }}">
+                <!--begin:Menu link-->
+                <span class="menu-link">
+                        <span class="menu-icon">
+                              <x-lucide-laptop-minimal class="tw-w-6 tw-h-6"/>
+                        </span>
+                        <span class="menu-title">
+                            My Assets
+                        </span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                <!--end:Menu link-->
+
+                <!--begin:Menu sub-->
+                <div class="menu-sub menu-sub-accordion">
+                    <a class="menu-link  {{ request()->url()==route('admin.my-pending-assets')?'active':'' }}"
+                       href="{{ route('admin.my-pending-assets') }}">
+                        <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                        <span class="menu-title">Pending</span>
+                    </a>
+                </div>
+                <!--end:Menu item-->
+                <!--begin:Menu sub-->
+                <div class="menu-sub menu-sub-accordion">
+                    <a class="menu-link  {{ request()->url()==route('admin.my-confirmed-assets')?'active':'' }}"
+                       href="{{ route('admin.my-confirmed-assets') }}">
+                        <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                        <span class="menu-title">Confirmed</span>
+                    </a>
+                </div>
+                <!--end:Menu item-->
+                <!--begin:Menu sub-->
+                <div class="menu-sub menu-sub-accordion">
+                    <a class="menu-link  {{ request()->url()==route('admin.my-assets.all')?'active':'' }}"
+                       href="{{ route('admin.my-assets.all') }}">
+                        <span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+                        <span class="menu-title">All Assets</span>
+                    </a>
+                </div>
+                <!--end:Menu item-->
+
             </div>
 
+            @can(\App\Constants\Permission::VIEW_CONFIRMED_ASSETS)
+                <div class="menu-item ">
+                    <a href="{{ route('admin.confirmed-assets') }}"
+                       class="menu-link {{ request()->fullUrl() ==route('admin.confirmed-assets')?'active':'' }}">
+                        <div class="menu-icon">
+                            <x-lucide-check-square class="tw-w-6 tw-h-6"/>
+                        </div>
+                        <span class="menu-title">Confirmed Assets</span>
+                    </a>
+                </div>
+            @endcan
 
             @canany([\App\Constants\Permission::MANAGE_DEPARTMENTS,\App\Constants\Permission::MANAGE_JOB_TITLES])
 

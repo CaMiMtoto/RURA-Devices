@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asset;
+use App\Models\ConfirmedAsset;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Exceptions\Exception;
 
@@ -70,10 +71,9 @@ class AssetController extends Controller
     public function myAssets()
     {
 
-        if (\request()->ajax()){
+        if (\request()->ajax()) {
             $assets = Asset::query()
-                ->where('email', '=',auth()->user()->email)
-                ->whereDoesntHave('confirmedAssets');
+                ->where('email', '=', auth()->user()->email);
 
             return datatables($assets)
                 ->addColumn('actions', fn(Asset $asset) => view('admin.assets.partials.actions', compact('asset')))
@@ -85,13 +85,50 @@ class AssetController extends Controller
         return view('admin.assets.my-assets');
 
     }
+    /**
+     * @throws Exception
+     */
+    public function myPendingAssets()
+    {
+        if (\request()->ajax()) {
+            $assets = Asset::query()
+                ->where('email', '=', auth()->user()->email)
+                ->whereDoesntHave('confirmedAssets');
 
+            return datatables($assets)
+                ->addColumn('actions', fn(Asset $asset) => view('admin.assets.partials.actions', compact('asset')))
+                ->rawColumns(['actions'])
+                ->toJson();
+        }
+
+
+        return view('admin.assets.my-pending-assets');
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function myConfirmedAssets()
+    {
+        if (\request()->ajax()) {
+            $assets = ConfirmedAsset::query()->with(['asset'])
+                ->where('confirmed_by', '=', auth()->id());
+            return datatables($assets)
+                ->addColumn('actions', fn(ConfirmedAsset $asset) => view('admin.assets.partials.actions', compact('asset')))
+                ->rawColumns(['actions'])
+                ->toJson();
+        }
+
+        return view('admin.assets.my_confirmed_assets');
+    }
     public function confirmAssets(Request $request)
     {
         $data = $request->validate([
             'ids' => ['required', 'array'],
             'ids.*' => ['required', 'integer'],
             'status' => ['required', 'string', 'in:received,not_received'],
+            'comment'=>['nullable', 'string'],
         ]);
 
         $assets = Asset::query()
@@ -115,5 +152,21 @@ class AssetController extends Controller
             return response()->json(['message' => 'Assets confirmed successfully.']);
         }
         return redirect()->back()->with('success', 'Assets confirmed successfully.');
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function confirmedAssets()
+    {
+        if (\request()->ajax()) {
+            $assets = ConfirmedAsset::query()->with(['asset', 'confirmedBy']);
+            return datatables($assets)
+                ->addColumn('actions', fn(ConfirmedAsset $asset) => view('admin.assets.partials.actions', compact('asset')))
+                ->rawColumns(['actions'])
+                ->toJson();
+        }
+
+        return view('admin.assets.confirmed_assets');
     }
 }

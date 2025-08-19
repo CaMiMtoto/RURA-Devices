@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'My Assets')
+@section('title', 'Confirmed Assets')
 @section('content')
     <div>
         <!--begin::Toolbar-->
@@ -18,7 +18,7 @@
                         <!--end::Item-->
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                           Assets
+                            Assets
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
@@ -28,14 +28,14 @@
                         <!--end::Item-->
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-gray-700">
-                            All
+                            Confirmed
                         </li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-1 lh-0">
-                       All Assets
+                        Confirmed Assets
                     </h1>
                     <!--end::Title-->
                 </div>
@@ -57,10 +57,11 @@
                     id="myTable">
                     <thead>
                     <tr class="text-start text-gray-800 fw-bold fs-7 text-uppercase">
-                        <th>Date</th>
-                        <th>Name</th>
+                        <th>Confirmed At</th>
+                        <th>Asset Name</th>
                         <th>Tag Number</th>
                         <th>Status</th>
+                        <th>Comment</th>
                     </tr>
                     </thead>
                 </table>
@@ -71,6 +72,53 @@
         <!--end::Content-->
     </div>
 
+
+    <div class="modal fade" tabindex="-1" id="confirmationModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                        Confirm Asset
+                    </h3>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                         aria-label="Close">
+                        <x-lucide-x class="fs-3  me-n1 tw-h-5 tw-w-5"/>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form action="{{ route('admin.my-assets.confirmation') }}" id="submitForm" method="post">
+                    @csrf
+                    <input type="hidden" id="id" name="id" value="0"/>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">
+                                Options
+                            </label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="">Select an option</option>
+                                <option value="received">Received</option>
+                                <option value="not_received">Not Received</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Comment</label>
+                            <textarea class="form-control" id="comment" name="comment"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer bg-light">
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn bg-secondary text-light-emphasis" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
@@ -86,24 +134,21 @@
                     processing: '<div class="spinner spinner-primary spinner-lg mr-15"></div> Processing...'
                 },
                 columns: [
-
                     {
-                        data: 'capitalization_date', name: 'capitalization_date',
+                        data: 'created_at', name: 'created_at',
                         render: function (data) {
                             return moment(data).format('YYYY-MM-DD');
                         }
                     },
-                    {data: 'name', name: 'name'},
-                    {data: 'tag_number', name: 'tag_number'},
-                    {data: 'status', name: 'status'},
-                    // {
-                    //     data: 'actions',
-                    //     name: 'actions',
-                    //     orderable: false,
-                    //     searchable: false,
-                    //     class: 'text-center',
-                    //     width: '15%'
-                    // },
+                    {data: 'asset.name', name: 'asset.name'},
+                    {data: 'asset.tag_number', name: 'asset.tag_number'},
+                    {
+                        data: 'status', name: 'status',
+                        render: function (data, type, row) {
+                            return `<span class="badge bg-light-${row.status_color} text-${row.status_color} rounded-pill">${row.real_status}</span>`;
+                        }
+                    },
+                    {data: 'comment', name: 'comment'},
                 ],
                 order: [[0, 'desc']]
             });
@@ -231,7 +276,7 @@
                                             // create span element under the input field with a class of invalid-feedback and add the error text returned by the validator
                                             $1.parent().append('<span class="invalid-feedback">' + value[0] + '</span>');
                                         });
-                                    }else{
+                                    } else {
                                         Swal.fire({
                                             icon: 'error',
                                             title: 'Error!',
@@ -250,9 +295,7 @@
             });
 
 
-
-
-          /* */
+            /* */
 
         });
     </script>

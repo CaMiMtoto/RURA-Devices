@@ -18,7 +18,7 @@
                         <!--end::Item-->
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                           Assets
+                            Assets
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
@@ -28,14 +28,14 @@
                         <!--end::Item-->
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-gray-700">
-                            All
+                            Confirmation
                         </li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-1 lh-0">
-                       All Assets
+                        Assets
                     </h1>
                     <!--end::Title-->
                 </div>
@@ -50,13 +50,35 @@
         <!--end::Toolbar-->
         <!--begin::Content-->
         <div class="my-3">
-
+            <div class="alert alert-info">
+                Please view the assets assigned to you. You are required to confirm whether you have received the asset
+                or not.
+                If you have received the assets, please click on the "Received" button
+                and if you have not received the assets, please click on the "Not Received" button after selecting the
+                assets you want to confirm.
+            </div>
             <div class="table-responsive">
+                <div>
+                    <button class="btn btn-success btn-sm" id="confirmation_btn" disabled>
+                        <x-lucide-check-circle class="tw-h-5 tw-w-5 me-2"/>
+                        Confirm
+                    </button>
+                    {{--      <button class="btn btn-danger btn-sm" id="not_received_btn" disabled>
+                              <x-lucide-x-circle class="tw-h-5 tw-w-5 me-2"/>
+                              Not Received
+                          </button>--}}
+                </div>
                 <table
                     class="table table-hover ps-2 align-middle  table-row-bordered table-row-gray-200 align-middle  fs-6 gy-4"
                     id="myTable">
                     <thead>
                     <tr class="text-start text-gray-800 fw-bold fs-7 text-uppercase">
+                        <th>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="select_all"
+                                       id="select_all">
+                            </div>
+                        </th>
                         <th>Date</th>
                         <th>Name</th>
                         <th>Tag Number</th>
@@ -72,6 +94,53 @@
     </div>
 
 
+    <div class="modal fade" tabindex="-1" id="confirmationModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                        Confirm Asset
+                    </h3>
+
+                    <!--begin::Close-->
+                    <div class="btn btn-icon btn-sm btn-active-light-primary ms-2" data-bs-dismiss="modal"
+                         aria-label="Close">
+                        <x-lucide-x class="fs-3  me-n1 tw-h-5 tw-w-5"/>
+                    </div>
+                    <!--end::Close-->
+                </div>
+
+                <form action="{{ route('admin.my-assets.confirmation') }}" id="submitForm" method="post">
+                    @csrf
+                    <input type="hidden" id="id" name="id" value="0"/>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">
+                                Options
+                            </label>
+                            <select class="form-select" id="status" name="status">
+                                <option value="">Select an option</option>
+                                <option value="received">Received</option>
+                                <option value="not_received">Not Received</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Comment</label>
+                            <textarea class="form-control" id="comment" name="comment"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer bg-light">
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn bg-secondary text-light-emphasis" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @push('scripts')
@@ -86,7 +155,16 @@
                     processing: '<div class="spinner spinner-primary spinner-lg mr-15"></div> Processing...'
                 },
                 columns: [
+                    {
 
+                        data: 'select', name: 'select',
+                        render: function (data, type, row) {
+                            return `<div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="select[]" value="${row.id}" id="select_${row.id}">
+                                    </div>`;
+                        }, orderable: false,
+                        searchable: false, width: '5%'
+                    },
                     {
                         data: 'capitalization_date', name: 'capitalization_date',
                         render: function (data) {
@@ -105,7 +183,7 @@
                     //     width: '15%'
                     // },
                 ],
-                order: [[0, 'desc']]
+                order: [[1, 'desc']]
             });
 
             let selectedIds = [];
@@ -252,7 +330,7 @@
 
 
 
-          /* */
+            /* */
 
         });
     </script>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasStatusColor;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -26,5 +27,20 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ConfirmedAsset extends Model
 {
-    //
+    use HasStatusColor;
+    protected $appends= ['real_status', 'status_color'];
+    public function asset(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Asset::class, 'asset_id');
+    }
+    public function confirmedBy(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'confirmed_by');
+    }
+
+    public function getRealStatusAttribute(): string
+    {
+//        remove _ from status and convert to lowercase
+        return ucwords(str_replace('_', ' ', $this->status));
+    }
 }

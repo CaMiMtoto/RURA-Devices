@@ -14,4 +14,6 @@ class Status
     const Rejected = 'rejected';
     const Cancelled = 'cancelled';
     const Inactive = 'inactive';
+    const Received = 'received';
+    const NotReceived = 'not_received';
 }

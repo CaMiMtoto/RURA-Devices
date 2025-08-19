@@ -16,8 +16,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['auth', PasswordChanged::class, EnsureUserIsActive::class], 'prefix' => '/admin', 'as' => 'admin.'], function () {
 
-    Route::get('/my-assets',[AssetController::class,'myAssets'])->name('my-assets');
-    Route::post('/confirm-assets',[AssetController::class,'confirmAssets'])->name('my-assets.confirmation');
+    Route::get('/my-assets/pending', [AssetController::class, 'myPendingAssets'])->name('my-pending-assets');
+    Route::get('/my-assets/confirmed', [AssetController::class, 'myConfirmedAssets'])->name('my-confirmed-assets');
+    Route::get('/my-assets/all', [AssetController::class, 'myAssets'])->name('my-assets.all');
+    Route::post('/confirm-assets', [AssetController::class, 'confirmAssets'])->name('my-assets.confirmation');
+    Route::get('/confirmed-assets', [AssetController::class, 'confirmedAssets'])->name('confirmed-assets');
 
     Route::group(['prefix' => "settings", "as" => "settings."], function () {
         Route::get('/departments', [App\Http\Controllers\DepartmentController::class, 'index'])->name('departments.index');
@@ -57,7 +60,6 @@ Route::group(['middleware' => ['auth', PasswordChanged::class, EnsureUserIsActiv
 
 
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('dashboard');
-
 
 
     Route::prefix('reports')->group(function () {

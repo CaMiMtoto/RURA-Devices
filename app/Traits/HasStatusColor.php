@@ -18,10 +18,12 @@ trait HasStatusColor
             strtolower(Status::Confirmed) => 'info',
 
             strtolower(Status::Completed),
+            strtolower(Status::Received),
             strtolower(Status::Approved) => 'success',
 
             strtolower(Status::Rejected),
             strtolower(Status::Cancelled),
+            strtolower(Status::NotReceived),
             strtolower(Status::Inactive) => 'danger',
 
             default => 'secondary',
