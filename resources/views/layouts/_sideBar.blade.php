@@ -71,7 +71,7 @@
             @can(\App\Constants\Permission::VIEW_CONFIRMED_ASSETS)
                 <div class="menu-item ">
                     <a href="{{ route('admin.confirmed-assets') }}"
-                       class="menu-link {{ request()->fullUrl() ==route('admin.confirmed-assets')?'active':'' }}">
+                       class="menu-link {{ str_contains(request()->fullUrl(),route('admin.confirmed-assets'))?'active':'' }}">
                         <div class="menu-icon">
                             <x-lucide-check-square class="tw-w-6 tw-h-6"/>
                         </div>
