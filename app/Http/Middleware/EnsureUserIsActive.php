@@ -15,11 +15,11 @@ class EnsureUserIsActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->user()->is_active) {
+     /*   if (!auth()->user()->is_active) {
             auth()->logout();
             session()->flash('error', 'Your account has been deactivated. Please contact the administrator.');
             return redirect()->route('login');
-        }
+        }*/
 
         return $next($request);
     }

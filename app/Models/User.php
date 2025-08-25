@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use LdapRecord\Laravel\Auth\AuthenticatesWithLdap;
+use LdapRecord\Laravel\Auth\HasLdapUser;
+use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -59,10 +62,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  * @mixin \Eloquent
  */
-class User extends Authenticatable
+class User extends Authenticatable implements LdapAuthenticatable
 {
+
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasProfilePhoto,HasRoles;
+    use HasFactory, Notifiable, HasProfilePhoto, HasRoles,AuthenticatesWithLdap;
 
     /**
      * The attributes that are mass assignable.
