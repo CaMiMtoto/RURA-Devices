@@ -4,10 +4,10 @@
      data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
     <!--begin::Main-->
     <div
-        class="d-flex flex-column justify-content-between h-100 hover-scroll-overlay-y my-2 d-flex flex-column"
-        id="kt_app_sidebar_main" data-kt-scroll="true" data-kt-scroll-activate="true"
-        data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_header"
-        data-kt-scroll-wrappers="#kt_app_main" data-kt-scroll-offset="5px">
+            class="d-flex flex-column justify-content-between h-100 hover-scroll-overlay-y my-2 d-flex flex-column"
+            id="kt_app_sidebar_main" data-kt-scroll="true" data-kt-scroll-activate="true"
+            data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_header"
+            data-kt-scroll-wrappers="#kt_app_main" data-kt-scroll-offset="5px">
         <!--begin::Sidebar menu-->
         <div id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false"
              class="flex-column-fluid menu menu-sub-indention menu-column menu-rounded menu-active-bg mb-7">
@@ -68,7 +68,7 @@
 
             </div>
 
-            @can(\App\Constants\Permission::VIEW_CONFIRMED_ASSETS)
+            @can(\App\Constants\Permission::VIEW_ASSETS_REPORT)
                 <div class="menu-item ">
                     <a href="{{ route('admin.confirmed-assets') }}"
                        class="menu-link {{ str_contains(request()->fullUrl(),route('admin.confirmed-assets'))?'active':'' }}">

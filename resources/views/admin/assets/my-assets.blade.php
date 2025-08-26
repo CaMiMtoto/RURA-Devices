@@ -60,6 +60,7 @@
                         <th>Date</th>
                         <th>Name</th>
                         <th>Tag Number</th>
+                        <th>Location</th>
                         <th>Status</th>
                     </tr>
                     </thead>
@@ -94,6 +95,7 @@
                         }
                     },
                     {data: 'name', name: 'name'},
+                    {data: 'tag_number', name: 'tag_number'},
                     {data: 'tag_number', name: 'tag_number'},
                     {data: 'status', name: 'status'},
                     // {

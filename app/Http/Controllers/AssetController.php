@@ -128,7 +128,11 @@ class AssetController extends Controller
             'ids' => ['required', 'array'],
             'ids.*' => ['required', 'integer'],
             'status' => ['required', 'string', 'in:received,not_received'],
-            'comment'=>['nullable', 'string'],
+            'comment'=>['nullable', 'string','required_if:status,not_received'],
+        ],[
+            'ids.required' => 'Please select at least one asset to confirm.',
+            'status.required' => 'Please select a status for the assets.',
+            'comment.required_if' => 'Please provide a comment because you selected not received option.',
         ]);
 
         $assets = Asset::query()

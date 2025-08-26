@@ -57,10 +57,13 @@
                     <!--end::Card title-->
 
                     <!--begin::Action-->
-                    <a href="{{ route('admin.system.profile.change-password') }}"
-                       class="btn btn-sm btn-light-success align-self-center">
-                        Change Password
-                    </a>
+                    @if(!auth()->user()->guid)
+                        <a href="{{ route('admin.system.profile.change-password') }}"
+                           class="btn btn-sm btn-light-success align-self-center">
+                            Change Password
+                        </a>
+                    @endif
+
                     <!--end::Action-->
                 </div>
                 <!--begin::Card header-->

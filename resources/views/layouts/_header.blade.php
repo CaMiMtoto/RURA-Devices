@@ -102,11 +102,15 @@
                                 My Profile
                             </a>
                         </div>
-                        <div class="menu-item px-5">
-                            <a href="{{ route('admin.system.profile.change-password') }}" class="menu-link px-5">
-                                Change Password
-                            </a>
-                        </div>
+
+                        @if(!auth()->user()->guid)
+                            <div class="menu-item px-5">
+                                <a href="{{ route('admin.system.profile.change-password') }}" class="menu-link px-5">
+                                    Change Password
+                                </a>
+                            </div>
+                        @endif
+
 
                         <!--begin::Menu item-->
                         <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"

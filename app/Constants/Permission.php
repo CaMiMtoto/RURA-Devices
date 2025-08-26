@@ -10,7 +10,7 @@ class Permission
     const MANAGE_DEPARTMENTS = 'MANAGE_DEPARTMENTS';
     const MANAGE_JOB_TITLES = 'MANAGE_JOB_TITLES';
     const VIEW_REPORTS = 'VIEW_REPORTS';
-    const VIEW_CONFIRMED_ASSETS = 'VIEW_CONFIRMED_ASSETS';
+    const VIEW_ASSETS_REPORT = 'VIEW_ASSETS_REPORT';
 
     public static function all(): array
     {
@@ -21,7 +21,7 @@ class Permission
             self::MANAGE_DEPARTMENTS,
             self::VIEW_REPORTS,
             self::MANAGE_JOB_TITLES,
-            self::VIEW_CONFIRMED_ASSETS,
+            self::VIEW_ASSETS_REPORT,
         ];
     }
 }

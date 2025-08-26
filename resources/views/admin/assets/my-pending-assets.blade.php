@@ -53,9 +53,9 @@
             <div class="alert alert-info">
                 Please view the assets assigned to you. You are required to confirm whether you have received the asset
                 or not.
-                If you have received the assets, please click on the "Received" button
-                and if you have not received the assets, please click on the "Not Received" button after selecting the
-                assets you want to confirm.
+                If you have received the assets, please choose  "Received" option
+                and if you have not received the assets, please choose  "Not Received" option with comment after selecting the
+                assets you want to confirm .
             </div>
             <div class="table-responsive">
                 <div>
@@ -82,6 +82,7 @@
                         <th>Date</th>
                         <th>Name</th>
                         <th>Tag Number</th>
+                        <th>Location</th>
                         <th>Status</th>
                     </tr>
                     </thead>
@@ -131,7 +132,7 @@
                     </div>
 
                     <div class="modal-footer bg-light">
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                         <button type="button" class="btn bg-secondary text-light-emphasis" data-bs-dismiss="modal">
                             Close
                         </button>
@@ -173,6 +174,7 @@
                     },
                     {data: 'name', name: 'name'},
                     {data: 'tag_number', name: 'tag_number'},
+                    {data: 'location', name: 'location'},
                     {data: 'status', name: 'status'},
                     // {
                     //     data: 'actions',
@@ -252,15 +254,19 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: 'Please select a status.',
+                        text: 'Please choose an option.',
                     });
                     return;
                 }
 
                 if (selectedIds.length > 0) {
+                    // replace _ with empty space in the status value and capitalize the first letter of each word
+                    const normalizedStatus = status.replace(/_/g, ' ').replace(/\w\S*/g, function (txt) {
+                        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    })
                     Swal.fire({
                         title: 'Are you sure?',
-                        text: `You are going to confirm the total of ${selectedIds.length} assets as ${status}.`,
+                        text: `You are going to confirm the total of ${selectedIds.length} assets as ${normalizedStatus}.`,
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonText: 'Yes, confirm!',
@@ -319,7 +325,7 @@
                                 },
                                 complete: function () {
                                     btn.prop('disabled', false);
-                                    btn.html('Save changes');
+                                    btn.html('Submit');
                                 }
                             });
                         }
