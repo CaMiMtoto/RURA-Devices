@@ -1,61 +1,61 @@
 @extends('layouts.master')
 @section('title', 'My Assets')
 @section('content')
-    <div>
-        <!--begin::Toolbar-->
-        <div class="mb-5">
-            <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
-                <!--begin::Page title-->
-                <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
-                    <!--begin::Breadcrumb-->
-                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
-                        <!--begin::Item-->
-                        <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                            <a href="{{ route('admin.dashboard') }}" class="text-gray-500">
-                                <x-lucide-house class="fs-3 text-gray-400 me-n1 tw-h-5 tw-w-5"/>
-                            </a>
-                        </li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
-                        <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
-                           Assets
-                        </li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
-                        <li class="breadcrumb-item">
-                            <x-lucide-chevron-right class="text-gray-400 mx-n1 tw-h-5 tw-w-5"/>
-                        </li>
-                        <!--end::Item-->
-                        <!--begin::Item-->
-                        <li class="breadcrumb-item text-gray-700">
-                            All
-                        </li>
-                        <!--end::Item-->
-                    </ul>
-                    <!--end::Breadcrumb-->
-                    <!--begin::Title-->
-                    <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-1 lh-0">
-                       All Assets
-                    </h1>
-                    <!--end::Title-->
-                </div>
-                <!--end::Page title-->
-                <!--begin::Actions-->
-                <div>
-
-                </div>
-                <!--end::Actions-->
+<div>
+    <!--begin::Toolbar-->
+    <div class="mb-5">
+        <div class="app-toolbar-wrapper d-flex flex-stack flex-wrap gap-4 w-100">
+            <!--begin::Page title-->
+            <div class="page-title d-flex flex-column gap-1 me-3 mb-2">
+                <!--begin::Breadcrumb-->
+                <ul class="breadcrumb breadcrumb-separatorless fw-semibold mb-6">
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                        <a href="{{ route('admin.dashboard') }}" class="text-gray-500">
+                            <x-lucide-house class="fs-3 text-gray-400 me-n1 tw-h-5 tw-w-5" />
+                        </a>
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-gray-700 fw-bold lh-1">
+                        Assets
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item">
+                        <x-lucide-chevron-right class="text-gray-400 mx-n1 tw-h-5 tw-w-5" />
+                    </li>
+                    <!--end::Item-->
+                    <!--begin::Item-->
+                    <li class="breadcrumb-item text-gray-700">
+                        All
+                    </li>
+                    <!--end::Item-->
+                </ul>
+                <!--end::Breadcrumb-->
+                <!--begin::Title-->
+                <h1 class="page-heading d-flex flex-column justify-content-center text-dark fw-bolder fs-1 lh-0">
+                    All Assets
+                </h1>
+                <!--end::Title-->
             </div>
-        </div>
-        <!--end::Toolbar-->
-        <!--begin::Content-->
-        <div class="my-3">
+            <!--end::Page title-->
+            <!--begin::Actions-->
+            <div>
 
-            <div class="table-responsive">
-                <table
-                    class="table table-hover ps-2 align-middle  table-row-bordered table-row-gray-200 align-middle  fs-6 gy-4"
-                    id="myTable">
-                    <thead>
+            </div>
+            <!--end::Actions-->
+        </div>
+    </div>
+    <!--end::Toolbar-->
+    <!--begin::Content-->
+    <div class="my-3">
+
+        <div class="table-responsive">
+            <table
+                class="table table-hover ps-2 align-middle  table-row-bordered table-row-gray-200 align-middle  fs-6 gy-4"
+                id="myTable">
+                <thead>
                     <tr class="text-start text-gray-800 fw-bold fs-7 text-uppercase">
                         <th>Date</th>
                         <th>Name</th>
@@ -63,21 +63,21 @@
                         <th>Location</th>
                         <th>Status</th>
                     </tr>
-                    </thead>
-                </table>
+                </thead>
+            </table>
 
 
-            </div>
         </div>
-        <!--end::Content-->
     </div>
+    <!--end::Content-->
+</div>
 
 
 @endsection
 
 @push('scripts')
-    <script>
-        $(function () {
+<script>
+    $(function () {
             let myTable = $('#myTable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -96,7 +96,7 @@
                     },
                     {data: 'name', name: 'name'},
                     {data: 'tag_number', name: 'tag_number'},
-                    {data: 'tag_number', name: 'tag_number'},
+                    {data: 'location', name: 'location'},
                     {data: 'status', name: 'status'},
                     // {
                     //     data: 'actions',
@@ -257,5 +257,5 @@
           /* */
 
         });
-    </script>
+</script>
 @endpush
