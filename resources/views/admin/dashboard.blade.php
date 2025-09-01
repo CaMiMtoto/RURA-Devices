@@ -189,7 +189,38 @@
                 </div>
                 <!--end::Body-->
             </div>
-
+            @can(\App\Constants\Permission::VIEW_ASSETS_REPORT)
+                <div class="row">
+                    <div class="col-lg-6 my-3">
+                        <div class="card card-body h-100">
+                            <h4>
+                                Confirmed vs Not Confirmed Assets
+                            </h4>
+                            <p class="text-muted tw-text-sm">
+                                Below is the distribution of all users assets that have been confirmed versus those that
+                                are
+                                still
+                                pending confirmation.
+                            </p>
+                            <div id="confirmed_pending"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 my-3">
+                        <div class="card card-body h-100">
+                            <h4>
+                                Received vs Not Received Assets
+                            </h4>
+                            <p class="text-muted tw-text-sm">
+                                Below is the distribution of all users assets that have been marked as received versus
+                                those
+                                that are
+                                still pending receipt.
+                            </p>
+                            <div id="received_not_assets"></div>
+                        </div>
+                    </div>
+                </div>
+            @endcan
 
         </div>
 
@@ -199,141 +230,59 @@
 
 @push('scripts')
     <script>
+        function renderChart(elementId, series, labels, colors, type = 'pie', width = 380) {
+            const options = {
+                series: series,
+                chart: {
+                    width: width,
+                    type: type,
+                },
+                labels: labels,
+                colors: colors,
+                legend: {
+                    position: 'bottom'   // ✅ Always show legend at bottom
+                },
+                responsive: [{
+                    breakpoint: 640,
+                    options: {
+                        chart: {
+                            width: '80%'
+                        },
+                        legend: {
+                            position: 'right'   // ✅ Always show legend at bottom
+                        }
+                    }
+                }]
+            };
+
+            const element = document.querySelector(elementId);
+            if (element) {
+                const chart = new ApexCharts(element, options);
+                chart.render();
+            }
+        }
+
+
         document.addEventListener('DOMContentLoaded', function () {
-            fetchRoomUtilizationData();
+            // Confirmed vs Pending
+            renderChart(
+                "#confirmed_pending",
+                [{{ $allConfirmedAssets }}, {{ $allPendingAssets }}],
+                ["Confirmed", "Pending"],
+                ["#2ECC71", "#F39C12"],
+                "pie",
+                250
+            );
 
-            function fetchRoomUtilizationData() {
-
-                $.ajax({
-                    url: '',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (data) {
-                        let roomNames = [];
-                        let hoursBooked = [];
-
-                        data.forEach(room => {
-                            roomNames.push(room.room_number); // Customize room label
-                            hoursBooked.push(room.total_hours_booked);
-                        });
-                        renderRoomUtilizationChart(roomNames, hoursBooked);
-                    }
-                });
-            }
-
-            function renderRoomUtilizationChart(roomNames, hoursBooked) {
-                const options = {
-                    chart: {
-                        type: 'bar'
-                    },
-                    theme: {
-                        mode: localStorage.getItem('data-bs-theme-mode'), // Detect theme
-                    },
-                    series: [{
-                        name: 'Total Hours Booked',
-                        data: hoursBooked
-                    }],
-                    colors: ['#023B6D'],
-                    plotOptions: {
-                        bar: {
-                            borderRadius: 4,
-                            borderRadiusApplication: 'end',
-                            horizontal: true,
-                            width: '20%',
-                        }
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    xaxis: {
-                        categories: roomNames
-                    },
-                    title: {
-                        text: 'Room Utilization (Total Hours Booked)',
-                        align: 'left'
-                    }
-                };
-
-                const chart = new ApexCharts(document.querySelector("#roomUtilizationChart"), options);
-                chart.render();
-            }
-
-            fetchPeakUsageTimesData();
-
-            function fetchPeakUsageTimesData() {
-                $.ajax({
-                    url: '',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (data) {
-                        let hoursOfDay = [];
-                        let bookingCounts = [];
-
-                        data.forEach(booking => {
-                            hoursOfDay.push(booking.hour_of_day + ':00'); // Format hour for display
-                            bookingCounts.push(booking.booking_count);
-                        });
-
-                        renderPeakUsageTimesChart(hoursOfDay, bookingCounts);
-                    },
-                    error: function (xhr, status, error) {
-                        console.log(error);
-                    }
-                })
-            }
-
-            function renderPeakUsageTimesChart(hoursOfDay, bookingCounts) {
-                const options = {
-                    chart: {
-                        type: 'area',
-                        stacked: false,
-                        zoom: {
-                            type: 'x',
-                            enabled: true,
-                            autoScaleYaxis: true
-                        },
-                        toolbar: {
-                            autoSelected: 'zoom'
-                        }
-                    },
-                    markers: {
-                        size: 0,
-                        style: 'hollow',
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    stroke: {
-                        width: 5,
-                        curve: 'smooth'
-                    },
-                    series: [{
-                        name: 'Bookings',
-                        data: bookingCounts
-                    }],
-                    xaxis: {
-                        categories: hoursOfDay,
-                        type: 'time',
-                    },
-                    title: {
-                        text: 'Peak Room Usage Times (By Hour of Day)',
-                        align: 'left'
-                    },
-                    fill: {
-                        type: 'gradient',
-                        gradient: {
-                            shadeIntensity: 1,
-                            inverseColors: false,
-                            opacityFrom: 0.5,
-                            opacityTo: 0,
-                            stops: [0, 90, 100]
-                        },
-                    },
-                };
-
-                const chart = new ApexCharts(document.querySelector("#peakUsageChart"), options);
-                chart.render();
-            }
+// Received vs Not Received
+            renderChart(
+                "#received_not_assets",
+                [{{ $allReceivedAssets }}, {{ $allNotReceivedAssets }}],
+                ["Received", "Not Received"],
+                ["#2ECC71", "#f32512"],
+                "donut",
+                250
+            );
 
         });
     </script>

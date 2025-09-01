@@ -46,12 +46,12 @@ class HomeController extends Controller
                 $q->where('status', 'not_received');
             })
             ->count();
-
+        $allConfirmedAssets = Asset::query()->whereHas('confirmedAssets')->count();
+        $allPendingAssets = Asset::query()->whereDoesntHave('confirmedAssets')->count();
+        $allReceivedAssets = Asset::query()->whereHas('confirmedAssets', fn($q) => $q->where('status', 'received'))->count();
+        $allNotReceivedAssets = Asset::query()->whereHas('confirmedAssets', fn($q) => $q->where('status', 'not_received'))->count();
         return view('admin.dashboard', compact(
-            'totalPendingConfirmations',
-            'totalConfirmedAssets',
-            'totalReceivedAssets',
-            'totalNotReceivedAssets'
+            'totalPendingConfirmations', 'totalConfirmedAssets', 'totalReceivedAssets', 'totalNotReceivedAssets', 'allConfirmedAssets', 'allPendingAssets', 'allReceivedAssets', 'allNotReceivedAssets'
         ));
     }
 }
