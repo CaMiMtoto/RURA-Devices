@@ -16,12 +16,12 @@ class AssetService
             ->when($filters['search'], function ($query, $search) {
                 return $query->where(function (Builder $query) use ($search) {
                     $query->whereHas('asset', function ($query) use ($search) {
-                        $query->where('name', 'ilike', "%$search%")
-                            ->orWhere('location', 'ilike', "%$search%")
-                            ->orWhere('email', 'ilike', "%$search%")
-                            ->orWhere('tag_number', 'ilike', "%$search%");
+                        $query->where('name', 'like', "%$search%")
+                            ->orWhere('location', 'like', "%$search%")
+                            ->orWhere('email', 'like', "%$search%")
+                            ->orWhere('tag_number', 'like', "%$search%");
                     })
-                        ->orWhere('status', 'ilike', "%$search%");
+                        ->orWhere('status', 'like', "%$search%");
                 });
             })
             ->orderBy($sortCol, $dir);
